@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
-const { Musician } = require("../models/index")
+const router2 = require("/.routes/musicians");
+const router3 = require("/.routes/bands");
 const { db } = require("../db/connection")
 
 const port = 3000;
@@ -10,31 +11,9 @@ const port = 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/musicians", async (req, res) => {
-    const musician = await Musician.findAll();
-    res.json(musician);
-})
+app.use("/musicians", router2);
+app.use("/bands", router3);
 
-app.post("/musicians", async (req, res) => {
-    const data =  await Musician.create(req.body);
-    res.json(data);
-})
-
-app.put("/musicians/:id", async (req, res) => {
-    const find = await Musician.update(req.body, {where: {id: req.params.id}});
-    res.json(find);
-})
-
-app.delete("/musicians/:id", async (req, res) => {
-    const data = await Musician.destroy({where: {id: req.params.id}});
-    res.json(data);
-})
-
-app.get("/musicians", async (req, res) => {
-    const data = req.params.id;
-    const data2 = await Musician.findByPk(data);
-    res.json(data2);
-})
 
 
 

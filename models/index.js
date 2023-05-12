@@ -1,8 +1,13 @@
 const Band = require('./Band')
 const Musician = require('./Musician')
 
-Musician.belongsTo(Band)
-Band.hasMany(Musician)
+Musician.hasOne(Band, {
+    foreignKey: 'musicianId',
+  });
+  
+  Band.hasMany(Musician, {
+    foreignKey: 'bandId',
+  });
 
 module.exports = {
     Band,
