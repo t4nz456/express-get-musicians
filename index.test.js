@@ -63,3 +63,25 @@ describe("Musicians Endpoints", () => {
     expect(res.body).toEqual(1); 
   });
 });
+
+describe('GET /musicians', () => {
+  it('should return all musicians', async () => {
+    const response = await request(app).get('/musicians');
+    expect(response.status).toBe(200);
+    expect(response.body).toBeInstanceOf(Array);
+    expect(response.body.length).toBeGreaterThan(0);
+  });
+  
+  it('should return a specific musician by id', async () => {
+    const response = await request(app).get('/musicians/1');
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty('id', 1);
+    expect(response.body).toHaveProperty('name', 'John Doe');
+    expect(response.body).toHaveProperty('instrument', 'guitar');
+  });
+  
+  it('should return 404 if musician is not found', async () => {
+    const response = await request(app).get('/musicians/999');
+    expect(response.status).toBe(404);
+  });
+});

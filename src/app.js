@@ -30,7 +30,11 @@ app.delete("/musicians/:id", async (req, res) => {
     res.json(data);
 })
 
-
+app.get("/musicians", async (req, res) => {
+    const data = req.params.id;
+    const data2 = await Musician.findByPk(data);
+    res.json(data2);
+})
 
 
 
